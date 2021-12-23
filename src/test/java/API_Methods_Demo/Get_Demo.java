@@ -63,4 +63,21 @@ public class Get_Demo {
         System.out.println(response.asPrettyString());
     }
 
+    @Test
+    public void extract_Single_Value() {
+        Response response = given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .when()
+                .log().method()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        System.out.println("<-- Workspace Name --> " + response.path("workspaces[0].name"));
+    }
+
 }
