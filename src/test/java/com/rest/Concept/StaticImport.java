@@ -11,17 +11,16 @@ import static org.hamcrest.Matchers.is;
 public class StaticImport {
 
     @Test
-    public void simple_test_case(){
-
+    public void simple_test_case() {
 
         given()
                 .baseUri(ObjectReader.reader.getURI())
-                .header("x-api-key", ObjectReader.reader.getKey() )
-           .when()
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .when()
                 .get(Endpoints_Web_Services.WORKSPACE)
-           .then()
+                .then()
                 .statusCode(200)
                 .body("workspaces[0].name", is(equalTo("My Workspace"))
-                ,"workspaces[0].type",is(equalTo("personal")));
+                        , "workspaces[0].type", is(equalTo("personal")));
     }
 }

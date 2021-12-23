@@ -9,16 +9,17 @@ import org.testng.annotations.Test;
 public class NonStaticImport {
 
     @Test
-    public void simple_test_case(){
+    public void simple_test_case() {
 
-        RestAssured.given()
+        RestAssured
+                .given()
                 .baseUri(ObjectReader.reader.getURI())
                 .header("x-api-key", ObjectReader.reader.getKey())
-           .when()
+                .when()
                 .get(Endpoints_Web_Services.WORKSPACE)
-           .then()
+                .then()
                 .statusCode(200)
                 .body("workspaces[0].name", Matchers.is(Matchers.equalTo("My Workspace"))
-                ,"workspaces[0].type",Matchers.is(Matchers.equalTo("personal")));
+                        , "workspaces[0].type", Matchers.is(Matchers.equalTo("personal")));
     }
 }
