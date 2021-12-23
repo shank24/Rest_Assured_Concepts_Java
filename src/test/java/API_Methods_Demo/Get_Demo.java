@@ -5,7 +5,8 @@ import com.rest.propertyReader.ObjectReader;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.Matchers.*;
+
 
 public class Get_Demo {
 
@@ -36,7 +37,11 @@ public class Get_Demo {
                 .assertThat()
                 .statusCode(200)
                 .body("workspaces.name", hasItems("My Workspace", "Team Workspace", "Dummy_New_Workspace"),
-                        "workspaces.type", hasItems("personal", "team", "team"));
+                        "workspaces.type", hasItems("personal", "team", "team"),
+                        "workspaces[0].name", equalTo("My Workspace"),
+                        "workspaces[0].name", is(equalTo("My Workspace")),
+                        "workspaces.size()", equalTo(3),
+                        "workspaces.name", hasItem("My Workspace"));
 
     }
 }
