@@ -1,24 +1,31 @@
 package com.rest;
 
+import io.restassured.RestAssured;
+import jdk.internal.dynalink.linker.LinkerServices;
+
 public class MethodChaining {
     public static void main(String[] args) {
 
-        MethodChaining mc = new MethodChaining();
-        mc.a1().a2().a3();
+                 a1()
+                .a2()
+                .a3();
+
+        //RestAssured - Implementation
+        //given().when().then()
     }
 
-    public MethodChaining a1(){
+    public static MethodChaining a1(){
         System.out.println("a1");
-        return this;
+        return new MethodChaining();
     }
 
-    public MethodChaining a2(){
+    public static MethodChaining a2(){
         System.out.println("a2");
-        return this;
+        return new MethodChaining();
     }
 
-    public MethodChaining a3(){
+    public static MethodChaining a3(){
         System.out.println("a3");
-        return this;
+        return new MethodChaining();
     }
 }
