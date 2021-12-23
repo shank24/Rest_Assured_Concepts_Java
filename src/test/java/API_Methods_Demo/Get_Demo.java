@@ -2,6 +2,7 @@ package API_Methods_Demo;
 
 import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
+import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -44,4 +45,22 @@ public class Get_Demo {
                         "workspaces.name", hasItem("My Workspace"));
 
     }
+
+    @Test
+    public void extract_Response() {
+        Response response = given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .when()
+                .log().method()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        System.out.println(response.asPrettyString());
+    }
+
 }
