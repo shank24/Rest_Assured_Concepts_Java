@@ -1,5 +1,6 @@
 package com.rest.Concept;
 
+import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
 import org.testng.annotations.Test;
 
@@ -17,7 +18,7 @@ public class StaticImport {
                 .baseUri(ObjectReader.reader.getURI())
                 .header("x-api-key", ObjectReader.reader.getKey() )
            .when()
-                .get("/workspaces")
+                .get(Endpoints_Web_Services.WORKSPACE)
            .then()
                 .statusCode(200)
                 .body("workspaces[0].name", is(equalTo("My Workspace"))

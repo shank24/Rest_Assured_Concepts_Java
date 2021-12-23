@@ -1,5 +1,6 @@
 package com.rest.Concept;
 
+import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
 import io.restassured.RestAssured;
 import org.hamcrest.Matchers;
@@ -14,7 +15,7 @@ public class NonStaticImport {
                 .baseUri(ObjectReader.reader.getURI())
                 .header("x-api-key", ObjectReader.reader.getKey())
            .when()
-                .get("/workspaces")
+                .get(Endpoints_Web_Services.WORKSPACE)
            .then()
                 .statusCode(200)
                 .body("workspaces[0].name", Matchers.is(Matchers.equalTo("My Workspace"))
