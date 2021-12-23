@@ -1,4 +1,4 @@
-package com.rest;
+package com.rest.Concept;
 
 import com.rest.propertyReader.ObjectReader;
 import io.restassured.RestAssured;
@@ -11,7 +11,7 @@ public class NonStaticImport {
     public void simple_test_case(){
 
         RestAssured.given()
-                .baseUri("https://api.postman.com")
+                .baseUri(ObjectReader.reader.getURI())
                 .header("x-api-key", ObjectReader.reader.getKey())
            .when()
                 .get("/workspaces")

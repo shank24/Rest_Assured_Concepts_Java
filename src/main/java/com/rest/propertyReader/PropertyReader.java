@@ -35,4 +35,9 @@ class PropertyReader implements ConfigReader {
         return prop.getProperty ( "API_KEY" );
     }
 
+    public
+    String getURI ( ) {
+        return prop.getProperty ( "URI" );
+    }
+
 }

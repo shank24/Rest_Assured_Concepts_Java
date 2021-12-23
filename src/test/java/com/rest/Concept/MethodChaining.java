@@ -1,7 +1,4 @@
-package com.rest;
-
-import io.restassured.RestAssured;
-import jdk.internal.dynalink.linker.LinkerServices;
+package com.rest.Concept;
 
 public class MethodChaining {
     public static void main(String[] args) {

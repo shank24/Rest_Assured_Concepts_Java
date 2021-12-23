@@ -1,4 +1,4 @@
-package com.rest;
+package com.rest.Concept;
 
 import com.rest.propertyReader.ObjectReader;
 import org.testng.annotations.Test;
@@ -14,7 +14,7 @@ public class StaticImport {
 
 
         given()
-                .baseUri("https://api.postman.com")
+                .baseUri(ObjectReader.reader.getURI())
                 .header("x-api-key", ObjectReader.reader.getKey() )
            .when()
                 .get("/workspaces")
