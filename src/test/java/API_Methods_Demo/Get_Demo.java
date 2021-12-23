@@ -2,6 +2,7 @@ package API_Methods_Demo;
 
 import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
@@ -77,7 +78,25 @@ public class Get_Demo {
                 .extract()
                 .response();
 
+        JsonPath jsonPath = new JsonPath(response.asString());
+        System.out.println("<-- Workspace Name --> " + jsonPath.get("workspaces[0].name"));
         System.out.println("<-- Workspace Name --> " + response.path("workspaces[0].name"));
     }
 
+    @Test
+    public void extract_Single_Value_Json_Path_Way() {
+        String response = given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .when()
+                .log().method()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .response().asString();
+
+        System.out.println("<-- Workspace Name --> " + JsonPath.from(response).get("workspaces[0].name"));
+    }
 }
