@@ -39,4 +39,18 @@ public class Rest_Logging_Demo {
                 .assertThat()
                 .statusCode(200);
     }
+
+    @Test
+    public void log_If_Validation_Fails() {
+        given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .when()
+                .log().all()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .log().ifValidationFails()
+                .assertThat()
+                .statusCode(201);
+    }
 }
