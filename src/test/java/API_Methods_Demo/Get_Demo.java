@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
@@ -98,5 +99,25 @@ public class Get_Demo {
                 .response().asString();
 
         System.out.println("<-- Workspace Name --> " + JsonPath.from(response).get("workspaces[0].name"));
+    }
+
+    @Test
+    public void hamcrest_Assert_On_Extracted_Response() {
+        String name = given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .when()
+                .log().method()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .response().path("workspaces[0].name");
+
+
+        assertThat(name, equalTo("My Workspace"));
+
+        System.out.println("<-- Workspace Name --> " + name);
     }
 }
