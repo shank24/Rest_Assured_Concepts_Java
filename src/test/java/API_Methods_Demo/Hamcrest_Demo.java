@@ -61,7 +61,8 @@ public class Hamcrest_Demo {
                 .assertThat()
                 .statusCode(200)
                 .body("workspaces.name", containsInAnyOrder("Team Workspace", "Dummy_New_Workspace", "My Workspace"),
-                        "workspaces.name", empty());
+                        "workspaces.name", is(not(empty())),
+                        "workspaces.name", hasSize(3));
     }
 
 }
