@@ -71,5 +71,19 @@ public class Rest_Logging_Demo {
                 .statusCode(201);
     }
 
+    @Test
+    public void log_Blacklist_Headers() {
+        given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .config(config.logConfig(LogConfig.logConfig().blacklistHeader("x-api-key")))
+                .when()
+                .log().all()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
+    }
 
 }
