@@ -69,8 +69,8 @@ public class Hamcrest_Demo {
                         "workspaces[0]", hasKey("id"),
                         "workspaces[1]", hasValue("Team Workspace"),
                         "workspaces[0]", hasEntry("type", "personal"),
-                        "workspaces[0]", not(equalTo(Collections.EMPTY_MAP))
-                );
+                        "workspaces[0]", not(equalTo(Collections.EMPTY_MAP)),
+                        "workspaces.name[0]", allOf(startsWith("My"), containsString("Workspace")));
     }
 
 }
