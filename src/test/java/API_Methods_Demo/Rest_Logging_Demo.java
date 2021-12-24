@@ -18,7 +18,7 @@ public class Rest_Logging_Demo {
                 .baseUri(ObjectReader.reader.getURI())
                 .header("x-api-key", ObjectReader.reader.getKey())
                 .when()
-                .log().all()
+                .log().headers()
                 .get(Endpoints_Web_Services.WORKSPACE)
                 .then()
                 .log().all()
