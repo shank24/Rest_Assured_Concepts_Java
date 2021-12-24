@@ -4,6 +4,7 @@ import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -115,9 +116,11 @@ public class Get_Demo {
                 .extract()
                 .response().path("workspaces[0].name");
 
-
+        //Hamcrest
         assertThat(name, equalTo("My Workspace"));
 
+        //Test Ng
+        Assert.assertEquals(name, "My Workspace");
         System.out.println("<-- Workspace Name --> " + name);
     }
 }
