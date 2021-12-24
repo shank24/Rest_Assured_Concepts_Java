@@ -2,8 +2,10 @@ package API_Methods_Demo;
 
 import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
+import io.restassured.config.LogConfig;
 import org.testng.annotations.Test;
 
+import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 
 public class Rest_Logging_Demo {
@@ -45,12 +47,29 @@ public class Rest_Logging_Demo {
         given()
                 .baseUri(ObjectReader.reader.getURI())
                 .header("x-api-key", ObjectReader.reader.getKey())
+                .config(config.logConfig(LogConfig.logConfig().enableLoggingOfRequestAndResponseIfValidationFails()))
                 .when()
-                .log().all()
+                //.log().ifValidationFails()
                 .get(Endpoints_Web_Services.WORKSPACE)
                 .then()
-                .log().ifValidationFails()
+                //.log().ifValidationFails()
                 .assertThat()
                 .statusCode(201);
     }
+
+    //Alternate to enable Log_If_Validation_Fails
+    @Test
+    public void log_If_Validation_Fails_Config() {
+        given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .config(config.logConfig(LogConfig.logConfig().enableLoggingOfRequestAndResponseIfValidationFails()))
+                .when()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .assertThat()
+                .statusCode(201);
+    }
+
+
 }
