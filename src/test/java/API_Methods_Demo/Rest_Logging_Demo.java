@@ -25,4 +25,18 @@ public class Rest_Logging_Demo {
                 .assertThat()
                 .statusCode(200);
     }
+
+    @Test
+    public void log_If_Error() {
+        given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .when()
+                .log().all()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .log().ifError()
+                .assertThat()
+                .statusCode(200);
+    }
 }
