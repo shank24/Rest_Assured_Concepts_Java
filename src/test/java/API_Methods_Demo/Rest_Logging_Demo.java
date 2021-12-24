@@ -5,6 +5,9 @@ import com.rest.propertyReader.ObjectReader;
 import io.restassured.config.LogConfig;
 import org.testng.annotations.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 
@@ -77,6 +80,26 @@ public class Rest_Logging_Demo {
                 .baseUri(ObjectReader.reader.getURI())
                 .header("x-api-key", ObjectReader.reader.getKey())
                 .config(config.logConfig(LogConfig.logConfig().blacklistHeader("x-api-key")))
+                .when()
+                .log().all()
+                .get(Endpoints_Web_Services.WORKSPACE)
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
+    }
+
+    @Test
+    public void log_Multiple_Blacklist_Headers() {
+
+        Set<String> headers = new HashSet<>();
+        headers.add("x-api-key");
+        headers.add("Accept");
+
+        given()
+                .baseUri(ObjectReader.reader.getURI())
+                .header("x-api-key", ObjectReader.reader.getKey())
+                .config(config.logConfig(LogConfig.logConfig().blacklistHeaders(headers)))
                 .when()
                 .log().all()
                 .get(Endpoints_Web_Services.WORKSPACE)
