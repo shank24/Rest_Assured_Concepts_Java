@@ -4,6 +4,8 @@ import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
 import org.testng.annotations.Test;
 
+import java.util.Collections;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -65,7 +67,10 @@ public class Hamcrest_Demo {
                         "workspaces.name", hasSize(3),
                         //"workspaces.name", everyItem(startsWith("My")
                         "workspaces[0]", hasKey("id"),
-                        "workspaces[1]", hasValue("Team Workspace"));
+                        "workspaces[1]", hasValue("Team Workspace"),
+                        "workspaces[0]", hasEntry("type", "personal"),
+                        "workspaces[0]", not(equalTo(Collections.EMPTY_MAP))
+                );
     }
 
 }
