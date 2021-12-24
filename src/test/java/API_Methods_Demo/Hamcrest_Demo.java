@@ -5,8 +5,7 @@ import com.rest.propertyReader.ObjectReader;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.*;
 
 
 public class Hamcrest_Demo {
@@ -61,7 +60,8 @@ public class Hamcrest_Demo {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("workspaces.name", containsInAnyOrder("Team Workspace", "Dummy_New_Workspace", "My Workspace"));
+                .body("workspaces.name", containsInAnyOrder("Team Workspace", "Dummy_New_Workspace", "My Workspace"),
+                        "workspaces.name", empty());
     }
 
 }
