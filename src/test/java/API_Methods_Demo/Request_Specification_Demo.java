@@ -3,6 +3,7 @@ package API_Methods_Demo;
 import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.BeforeClass;
@@ -26,6 +27,7 @@ public class Request_Specification_Demo {
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
         requestSpecBuilder.setBaseUri(ObjectReader.reader.getURI());
         requestSpecBuilder.addHeader("x-api-key", ObjectReader.reader.getKey());
+        requestSpecBuilder.log(LogDetail.ALL);
 
         requestSpecification = requestSpecBuilder.build();
     }
