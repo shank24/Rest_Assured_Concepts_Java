@@ -10,12 +10,12 @@ import static io.restassured.RestAssured.given;
 public class Request_Specification_Demo {
 
     @Test
-    public void validate_Get_Verb() {
-        RequestSpecification requestSpecification;
-
-        given()
+    public void request_Spec_Demo() {
+        RequestSpecification requestSpecification = given()
                 .baseUri(ObjectReader.reader.getURI())
-                .header("x-api-key", ObjectReader.reader.getKey())
+                .header("x-api-key", ObjectReader.reader.getKey());
+
+        given().spec(requestSpecification)
                 .when()
                 .log().method()
                 .get(Endpoints_Web_Services.WORKSPACE)
