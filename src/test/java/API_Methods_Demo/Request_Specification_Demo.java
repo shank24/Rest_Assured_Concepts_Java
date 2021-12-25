@@ -2,6 +2,7 @@ package API_Methods_Demo;
 
 import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.BeforeClass;
@@ -17,9 +18,16 @@ public class Request_Specification_Demo {
 
     @BeforeClass
     public void beforeClass() {
-        requestSpecification = given()
+
+        /*requestSpecification = given()
                 .baseUri(ObjectReader.reader.getURI())
-                .header("x-api-key", ObjectReader.reader.getKey());
+                .header("x-api-key", ObjectReader.reader.getKey());*/
+
+        RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
+        requestSpecBuilder.setBaseUri(ObjectReader.reader.getURI());
+        requestSpecBuilder.addHeader("x-api-key", ObjectReader.reader.getKey());
+
+        requestSpecification = requestSpecBuilder.build();
     }
 
     @Test
@@ -54,14 +62,14 @@ public class Request_Specification_Demo {
     @Test
     public void assert_Status_Code() {
 
-        Response response = requestSpecification.get(Endpoints_Web_Services.WORKSPACE).then().log().all().extract().response();
+        Response response = given().spec(requestSpecification).get(Endpoints_Web_Services.WORKSPACE).then().log().all().extract().response();
         assertThat(response.statusCode(), is(equalTo(200)));
     }
 
     @Test
     public void assert_Body() {
 
-        Response response = requestSpecification.get(Endpoints_Web_Services.WORKSPACE).then().log().all().extract().response();
+        Response response = given().spec(requestSpecification).get(Endpoints_Web_Services.WORKSPACE).then().log().all().extract().response();
         assertThat(response.path("workspaces[0].name"), is(equalTo("My Workspace")));
     }
 
