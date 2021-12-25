@@ -43,6 +43,7 @@ public class Headers_Demo {
 
         System.out.println("Extracted Headers Name --> " + extracted_Headers.get("Server").getName());
         System.out.println("Extracted Headers Value --> " + extracted_Headers.get("Server").getValue());
+        System.out.println("Extracted Headers Value --> " + extracted_Headers.getValue("Server"));
 
     }
 }
