@@ -65,5 +65,4 @@ public class Request_Specification_Demo {
         assertThat(response.path("workspaces[0].name"), is(equalTo("My Workspace")));
     }
 
-    //My Workspace
 }
