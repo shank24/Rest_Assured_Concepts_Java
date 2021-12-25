@@ -79,6 +79,8 @@ public class Request_Specification_Demo {
     public void query_Test() {
         QueryableRequestSpecification queryableRequestSpecification = SpecificationQuerier.query(RestAssured.requestSpecification);
         System.out.println(queryableRequestSpecification.getBaseUri());
+        System.out.println(queryableRequestSpecification.getHeaders());
+
     }
 
 }
