@@ -41,7 +41,8 @@ public class Response_Specification_Demo {
 
         responseSpecification = RestAssured.expect()
                 .contentType(ContentType.JSON)
-                .statusCode(200);
+                .statusCode(200)
+                .log().all();
 
     }
 
@@ -51,8 +52,7 @@ public class Response_Specification_Demo {
 
         get(Endpoints_Web_Services.WORKSPACE)
                 .then()
-                .spec(responseSpecification)
-                .log().all();
+                .spec(responseSpecification);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class Response_Specification_Demo {
 
         Response response = get(Endpoints_Web_Services.WORKSPACE)
                 .then().spec(responseSpecification)
-                .log().all().extract().response();
+                .extract().response();
 
         assertThat(response.path("workspaces[0].name"), is(equalTo("My Workspace")));
     }
