@@ -6,6 +6,8 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
+import io.restassured.specification.QueryableRequestSpecification;
+import io.restassured.specification.SpecificationQuerier;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -30,6 +32,7 @@ public class Request_Specification_Demo {
         requestSpecBuilder.addHeader("x-api-key", ObjectReader.reader.getKey());
         requestSpecBuilder.log(LogDetail.ALL);
 
+        //Default RequestSpecification
         //This static variable will retains its value,
         // so we can directly use get()
         RestAssured.requestSpecification = requestSpecBuilder.build();
@@ -70,6 +73,12 @@ public class Request_Specification_Demo {
 
         Response response = get(Endpoints_Web_Services.WORKSPACE).then().log().all().extract().response();
         assertThat(response.path("workspaces[0].name"), is(equalTo("My Workspace")));
+    }
+
+    @Test
+    public void query_Test() {
+        QueryableRequestSpecification queryableRequestSpecification = SpecificationQuerier.query(RestAssured.requestSpecification);
+        System.out.println(queryableRequestSpecification.getBaseUri());
     }
 
 }
