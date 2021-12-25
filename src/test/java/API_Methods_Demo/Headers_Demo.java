@@ -21,7 +21,8 @@ public class Headers_Demo {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .header("X-RateLimit-Limit", "300");
+                .headers("X-RateLimit-Limit", "300",
+                        "Server", "nginx");
     }
 
 }
