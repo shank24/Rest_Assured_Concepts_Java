@@ -7,10 +7,13 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.with;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.matchesPattern;
 
@@ -66,4 +69,25 @@ public class Post_Demo {
 
     }
 
+    @Test
+    public void non_BDD_Style_Post_Verb() {
+        String payload = "{\n" +
+                "    \"workspace\": \n" +
+                "        {\n" +
+                "            \"id\": \"9815f1bd-38be-4bce-8003-e68bc0f4a2d8\",\n" +
+                "            \"name\": \"My Workspace4\",\n" +
+                "            \"type\": \"personal\",\n" +
+                "            \"description\" : \"This is dummy workspaces\"\n" +
+                "        }\n" +
+                "}";
+
+        Response response = with()
+                .body(payload)
+                .post(Endpoints_Web_Services.WORKSPACE);
+
+        assertThat(response.path("workspace.name"), equalTo("My Workspace4"));
+        assertThat(response.path("workspace.id"), matchesPattern("^[a-z0-9-]{36}$"));
+
+
+    }
 }
