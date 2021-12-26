@@ -8,7 +8,6 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,7 +20,7 @@ public class Response_Specification_Demo {
 
     //RequestSpecification requestSpecification;
 
-    ResponseSpecification responseSpecification;
+    //ResponseSpecification responseSpecification;
 
     @BeforeClass
     public void beforeClass() {
@@ -50,23 +49,21 @@ public class Response_Specification_Demo {
                 .expectContentType(ContentType.JSON)
                 .log(LogDetail.ALL);
 
-        responseSpecification = responseSpecBuilder.build();
+        RestAssured.responseSpecification = responseSpecBuilder.build();
     }
 
     @Test
 
     public void response_Spec_Demo() {
 
-        get(Endpoints_Web_Services.WORKSPACE)
-                .then()
-                .spec(responseSpecification);
+        get(Endpoints_Web_Services.WORKSPACE);
     }
 
     @Test
     public void assert_response_Type() {
 
         Response response = get(Endpoints_Web_Services.WORKSPACE)
-                .then().spec(responseSpecification)
+                .then()
                 .extract().response();
 
         assertThat(response.path("workspaces[0].name"), is(equalTo("My Workspace")));
