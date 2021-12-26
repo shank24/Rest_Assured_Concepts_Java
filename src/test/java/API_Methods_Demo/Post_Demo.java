@@ -11,6 +11,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.matchesPattern;
 
 
 public class Post_Demo {
@@ -25,6 +27,7 @@ public class Post_Demo {
 
         requestSpecBuilder.setBaseUri(ObjectReader.reader.getURI());
         requestSpecBuilder.addHeader("x-api-key", ObjectReader.reader.getKey());
+        requestSpecBuilder.setContentType(ContentType.JSON);
         requestSpecBuilder.log(LogDetail.ALL);
 
         RestAssured.requestSpecification = requestSpecBuilder.build();
@@ -42,16 +45,25 @@ public class Post_Demo {
 
     @Test
     public void validate_Post_Verb() {
+        String payload = "{\n" +
+                "    \"workspace\": \n" +
+                "        {\n" +
+                "            \"id\": \"9815f1bd-38be-4bce-8003-e68bc0f4a2d8\",\n" +
+                "            \"name\": \"My Workspace3\",\n" +
+                "            \"type\": \"personal\",\n" +
+                "            \"description\" : \"This is dummy workspaces\"\n" +
+                "        }\n" +
+                "}";
+
         given()
-                .baseUri(ObjectReader.reader.getURI())
-                .header("x-api-key", ObjectReader.reader.getKey())
+                .body(payload)
                 .when()
-                .log().method()
-                .get(Endpoints_Web_Services.WORKSPACE)
+                .post(Endpoints_Web_Services.WORKSPACE)
                 .then()
-                .log().all()
                 .assertThat()
-                .statusCode(200);
+                .body("workspace.name", equalTo("My Workspace3"),
+                        "workspace.id", matchesPattern("^[a-z0-9-]{36}$"));
+
     }
 
 }
