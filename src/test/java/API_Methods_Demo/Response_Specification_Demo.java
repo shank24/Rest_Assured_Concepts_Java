@@ -4,6 +4,7 @@ import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -39,11 +40,17 @@ public class Response_Specification_Demo {
         // so we can directly use get()
         RestAssured.requestSpecification = requestSpecBuilder.build();
 
-        responseSpecification = RestAssured.expect()
+        /*responseSpecification = RestAssured.expect()
                 .contentType(ContentType.JSON)
                 .statusCode(200)
-                .log().all();
+                .log().all();*/
 
+        ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder()
+                .expectStatusCode(200)
+                .expectContentType(ContentType.JSON)
+                .log(LogDetail.ALL);
+
+        responseSpecification = responseSpecBuilder.build();
     }
 
     @Test
