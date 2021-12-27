@@ -1,4 +1,4 @@
-package API_Methods_Demo;
+package API_Methods_Demo.Assertion_Demo;
 
 import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.propertyReader.ObjectReader;
