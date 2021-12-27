@@ -79,4 +79,27 @@ public class Put_Demo {
 
     }
 
+
+    @Test
+    public void validate_Put_Verb_Path_Param() {
+        String payload = "{\n" +
+                "    \"workspace\": {\n" +
+                "        \"id\": \"9815f1bd-38be-4bce-8003-e68bc0f4a2d8\",\n" +
+                "            \"name\": \"My_Workspace_New\",\n" +
+                "            \"type\": \"personal\"\n" +
+                "    }\n" +
+                "}";
+
+        given()
+                .pathParam("workspaceParam", workspaceId)
+                .body(payload)
+                .when()
+                .put(Endpoints_Web_Services.WORKSPACE + "/{workspaceParam}")
+                .then()
+                .assertThat()
+                .body("workspace.name", equalTo("My_Workspace_New"),
+                        "workspace.id", matchesPattern("^[a-z0-9-]{36}$"),
+                        "workspace.id", equalTo(workspaceId));
+
+    }
 }
