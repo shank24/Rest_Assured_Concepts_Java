@@ -3,6 +3,7 @@ package API_Methods_Demo.Payload_Demo;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.config.EncoderConfig;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -30,6 +32,8 @@ public class Payload_Array_File_Demo {
         requestSpecBuilder.setBaseUri("https://7fd638e3-e495-4a96-9c53-2cafad55c9d5.mock.pstmn.io/");
         requestSpecBuilder.setContentType(ContentType.JSON);
         requestSpecBuilder.addHeader("x-mock-match-request-body", "true");
+        requestSpecBuilder.setConfig(config.encoderConfig(EncoderConfig.encoderConfig().
+                appendDefaultContentCharsetToContentTypeIfUndefined(false)));
         requestSpecBuilder.log(LogDetail.ALL);
 
         RestAssured.requestSpecification = requestSpecBuilder.build();
