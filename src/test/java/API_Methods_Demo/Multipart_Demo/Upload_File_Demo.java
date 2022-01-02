@@ -41,7 +41,7 @@ public class Upload_File_Demo {
     }
 
     @Test
-    public void validate_Path_Param() {
+    public void validate_Upload_File() {
 
         String attributes = "{\"name\" : \"File\"}";
         given()
