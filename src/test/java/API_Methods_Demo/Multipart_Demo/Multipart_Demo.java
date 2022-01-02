@@ -43,6 +43,7 @@ public class Multipart_Demo {
 
         given()
                 .multiPart("foo1", "bar1")
+                .multiPart("foo2", "bar2")
                 .when()
                 .post("/post")
                 .then()
