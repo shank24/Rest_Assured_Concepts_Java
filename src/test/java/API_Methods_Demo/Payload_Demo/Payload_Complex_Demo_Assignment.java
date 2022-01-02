@@ -115,38 +115,42 @@ public class Payload_Complex_Demo_Assignment {
 }
 
 /*
+ {
+  "colors": [
+
     {
-   "id":"0001",
-   "type":"donut",
-   "name":"Cake",
-   "ppu":0.55,
-   "batters":{
-      "batter":[
-         {
-            "id":"1001",
-            "type":"Regular"
-         },
-         {
-            "id":[
-               5,
-               9
-            ],
-            "type":"Chocolate"
-         }
-      ]
-   },
-   "topping":[
-      {
-         "id":"5001",
-         "type":"None"
-      },
-      {
-         "id":"5002",
-         "type":[
-            "test1",
-            "test2"
-         ]
+      "color": "black",
+      "category": "hue",
+      "type": "primary",
+      "code": {
+        "rgba": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "hex": "#000"
       }
-   ]
+    }
+    ,
+
+    {
+      "color": "white",
+      "category": "value",
+      "code": {
+        "rgba": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "hex": "#FFF"
+      }
+    }
+
+
+  ]
 }
-*/
+
+
+ */
