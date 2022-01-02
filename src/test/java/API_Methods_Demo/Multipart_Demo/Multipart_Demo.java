@@ -39,7 +39,7 @@ public class Multipart_Demo {
     }
 
     @Test
-    public void validate_Path_Param() {
+    public void validate_Multipart() {
 
         given()
                 .multiPart("foo1", "bar1")
