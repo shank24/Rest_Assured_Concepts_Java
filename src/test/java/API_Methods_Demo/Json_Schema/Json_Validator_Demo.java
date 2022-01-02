@@ -1,24 +1,19 @@
 package API_Methods_Demo.Json_Schema;
 
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.http.ContentType;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 
 public class Json_Validator_Demo {
 
-    @BeforeClass
+    /*@BeforeClass
     public void beforeClass() {
 
-        /**
-         * RequestSpec Builder
-         */
+        *//**
+     * RequestSpec Builder
+     *//*
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
 
         requestSpecBuilder.setBaseUri("https://postman-echo.com/");
@@ -27,26 +22,32 @@ public class Json_Validator_Demo {
 
         RestAssured.requestSpecification = requestSpecBuilder.build();
 
-        /**
-         * ResponseSpec Builder
-         */
+        */
+
+    /**
+     * ResponseSpec Builder
+     *//*
         ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectContentType(ContentType.JSON)
                 .log(LogDetail.ALL);
 
         RestAssured.responseSpecification = responseSpecBuilder.build();
-    }
-
+    }*/
     @Test
     public void validate_Json_Schema_Validator() {
 
         given()
+                .baseUri("https://postman-echo.com")
+                .log()
+                .all()
                 .when()
                 .get("/get")
                 .then()
                 .log()
-                .all();
+                .all()
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("json_Files/EchoGet.json"));
     }
 
 
