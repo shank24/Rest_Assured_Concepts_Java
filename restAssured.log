@@ -10,13 +10,13 @@ Cookies:		<none>
 Multiparts:		<none>
 Body:			<none>
 HTTP/1.1 200 OK
-Date: Sun, 02 Jan 2022 17:58:00 GMT
+Date: Sun, 02 Jan 2022 18:05:13 GMT
 Content-Type: application/json; charset=utf-8
 Content-Length: 305
 Connection: keep-alive
-ETag: W/"131-Tf3374nAwQdD1ht1QcKqvCT4x8E"
+ETag: W/"131-kfZgj24XvebOZP1Li9VAnJL84XY"
 Vary: Accept-Encoding
-set-cookie: sails.sid=s%3AY_CBofQ-h9aekFkeRWLzL6an7xqjMnOD.nwSl9zzfZJit3xQ%2BVHPfCbSVgrYdyS7%2BeLHGPNDCowU; Path=/; HttpOnly
+set-cookie: sails.sid=s%3APghaLLdAb2DomhZYFLzl8X463o00YPNl.ZW%2Bn4Y12uG1Pg1kgm52rv6qZzsWpV55feVuwG8AFPaA; Path=/; HttpOnly
 
 {
     "args": {
@@ -26,7 +26,7 @@ set-cookie: sails.sid=s%3AY_CBofQ-h9aekFkeRWLzL6an7xqjMnOD.nwSl9zzfZJit3xQ%2BVHP
         "x-forwarded-proto": "https",
         "x-forwarded-port": "443",
         "host": "postman-echo.com",
-        "x-amzn-trace-id": "Root=1-61d1e7a8-7fe9b2eb4e5f1636401b20b8",
+        "x-amzn-trace-id": "Root=1-61d1e959-11d1177c3ac013ba07a7f083",
         "accept": "*/*",
         "user-agent": "Apache-HttpClient/4.5.13 (Java/1.8.0_292)",
         "accept-encoding": "gzip,deflate"
