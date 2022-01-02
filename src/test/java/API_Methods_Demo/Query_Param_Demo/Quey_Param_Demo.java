@@ -8,6 +8,8 @@ import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+
 import static io.restassured.RestAssured.given;
 
 
@@ -39,13 +41,33 @@ public class Quey_Param_Demo {
     }
 
     @Test
-    public void validate_Query_Param() {
+    public void validate_Single_Query_Param() {
 
         given()
                 //Generic
                 //.param("foo1", "bar1")
                 //Specific to Query Param
                 .queryParam("foo1", "bar1")
+                .when()
+                .get("/get")
+                .then()
+                .log()
+                .all();
+    }
+
+    @Test
+    public void validate_Multiple_Query_Param() {
+
+        HashMap<String, String> queryParam = new HashMap<>();
+        queryParam.put("foo1", "bar1");
+        queryParam.put("foo2", "bar2");
+        queryParam.put("foo3", "bar3");
+        queryParam.put("foo4", "bar4");
+        queryParam.put("foo5", "bar5");
+        queryParam.put("foo6", "bar6");
+
+        given()
+                .queryParams(queryParam)
                 .when()
                 .get("/get")
                 .then()
