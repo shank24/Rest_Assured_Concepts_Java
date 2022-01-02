@@ -42,7 +42,10 @@ public class Quey_Param_Demo {
     public void validate_Query_Param() {
 
         given()
-                .param("foo1", "bar1")
+                //Generic
+                //.param("foo1", "bar1")
+                //Specific to Query Param
+                .queryParam("foo1", "bar1")
                 .when()
                 .get("/get")
                 .then()
