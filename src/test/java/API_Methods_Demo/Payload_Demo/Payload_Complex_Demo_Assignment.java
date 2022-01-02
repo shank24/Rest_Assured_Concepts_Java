@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 
-public class Payload_Complex_Demo {
+public class Payload_Complex_Demo_Assignment {
 
     @BeforeClass
     public void beforeClass() {
@@ -52,67 +52,63 @@ public class Payload_Complex_Demo {
     @Test
     public void validate_Post_Verb_Payload_From_Complex_Json() {
 
-        //Batter Payload
-        List<Integer> idArrayList = new ArrayList<>();
+        //RGB1
+        List<Integer> rgba1ArrayList = new ArrayList<>();
 
-        idArrayList.add(5);
-        idArrayList.add(9);
+        rgba1ArrayList.add(255);
+        rgba1ArrayList.add(255);
+        rgba1ArrayList.add(255);
+        rgba1ArrayList.add(1);
 
-        HashMap<String, Object> batterHashMap2 = new HashMap<>();
+        //CodeHashmap1
+        HashMap<String, Object> codeHashMap1 = new HashMap<>();
+        codeHashMap1.put("rgba", rgba1ArrayList);
+        codeHashMap1.put("hex", "#000");
 
-        batterHashMap2.put("id", idArrayList);
-        batterHashMap2.put("type", "Chocolate");
-
-        HashMap<String, Object> batterHashMap1 = new HashMap<>();
-
-        batterHashMap1.put("id", "1001");
-        batterHashMap1.put("type", "Regular");
-
-        List<HashMap<String, Object>> batterArrayList = new ArrayList<>();
-        batterArrayList.add(batterHashMap1);
-        batterArrayList.add(batterHashMap2);
-
-        HashMap<String, List<HashMap<String, Object>>> batterHashMap = new HashMap<>();
-        batterHashMap.put("batter", batterArrayList);
-
-        //Topping Payload
-
-        List<String> typeArrayList = new ArrayList<>();
-        typeArrayList.add("test1");
-        typeArrayList.add("test2");
+        //ColorHashMap1
+        HashMap<String, Object> colorHashMap1 = new HashMap();
+        colorHashMap1.put("color", "black");
+        colorHashMap1.put("category", "hue");
+        colorHashMap1.put("type", "primary");
+        colorHashMap1.put("code", codeHashMap1);
 
 
-        HashMap<String, Object> toppingHashMap2 = new HashMap<>();
+        //RGB2
+        List<Integer> rgba2ArrayList = new ArrayList<>();
 
-        toppingHashMap2.put("id", "5002");
-        toppingHashMap2.put("type", typeArrayList);
+        rgba2ArrayList.add(0);
+        rgba2ArrayList.add(0);
+        rgba2ArrayList.add(0);
+        rgba2ArrayList.add(1);
 
-        HashMap<String, Object> toppingHashMap1 = new HashMap<>();
 
-        toppingHashMap1.put("id", "5001");
-        toppingHashMap1.put("type", "None");
+        //CodeHashmap2
+        HashMap<String, Object> codeHashMap2 = new HashMap<>();
+        codeHashMap2.put("rgba", rgba2ArrayList);
+        codeHashMap2.put("hex", "#FFF");
 
-        List<HashMap<String, Object>> toppingArrayList = new ArrayList<>();
-        toppingArrayList.add(toppingHashMap1);
-        toppingArrayList.add(toppingHashMap2);
+        //ColorHashMap1
+        HashMap<String, Object> colorHashMap2 = new HashMap();
+        colorHashMap2.put("color", "white");
+        colorHashMap2.put("category", "value");
+        colorHashMap2.put("code", codeHashMap2);
+
+        List<HashMap<String, Object>> colorsArrayList = new ArrayList<>();
+        colorsArrayList.add(colorHashMap1);
+        colorsArrayList.add(colorHashMap2);
 
         HashMap<String, Object> mainHashMap = new HashMap<>();
-        mainHashMap.put("id", "0001");
-        mainHashMap.put("type", "donut");
-        mainHashMap.put("name", "Cake");
-        mainHashMap.put("ppu", 0.55);
-        mainHashMap.put("batters", batterHashMap);
-        mainHashMap.put("topping", toppingArrayList);
+        mainHashMap.put("colors", colorsArrayList);
 
         given()
                 .body(mainHashMap)
                 .when()
-                .post("/postComplexJson")
+                .post("/postAssJson")
                 .then()
                 .log()
                 .all()
                 .assertThat()
-                .body("msg", equalTo("Success"));
+                .body("message", equalTo("Bingo"));
 
     }
 
