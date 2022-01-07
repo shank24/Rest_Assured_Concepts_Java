@@ -1,27 +1,24 @@
-package API_Methods_Demo.Serialization_Demo;
+package API_Methods_Demo.Pojo_Demo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rest.pojo.PostMock;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
+import org.hamcrest.MatcherAssert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 
-public class JsonList_API_Demo {
+public class Simple_Pojo_Demo {
 
     @BeforeClass
     public void beforeClass() {
@@ -52,33 +49,50 @@ public class JsonList_API_Demo {
     }
 
     @Test
-    public void validate_Json_List() throws JsonProcessingException {
-        HashMap<String, String> obj5001 = new HashMap<>();
-        obj5001.put("id", "5001");
-        obj5001.put("type", "None");
+    public void validate_Simple_Pojo() {
 
-        HashMap<String, String> obj5002 = new HashMap<>();
-        obj5002.put("id", "5002");
-        obj5002.put("type", "Cherry");
-
-        List<Map> jsonList = new ArrayList<>();
-        jsonList.add(obj5001);
-        jsonList.add(obj5002);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonListStr = objectMapper.writeValueAsString(jsonList);
+        PostMock postMock = new PostMock();
+        postMock.setKey1("value1");
+        postMock.setKey2("value2");
 
         given()
-                .body(jsonListStr)
+                .body(postMock)
                 .when()
-                .post("/post")
+                .post("/postSimple")
                 .then()
                 .log()
                 .all()
                 .assertThat()
-                .body("msg", equalTo("Success"));
+                .body("key1", equalTo(postMock.getKey1()),
+                        "key2", equalTo(postMock.getKey2()));
 
     }
 
+    @Test
+    public void de_Serialize_Simple_Pojo() throws JsonProcessingException {
+
+        PostMock postMockPojo = new PostMock();
+        postMockPojo.setKey1("value1");
+        postMockPojo.setKey2("value2");
+
+        PostMock deSerializePojo = given()
+                .body(postMockPojo)
+                .when()
+                .post("/postSimple")
+                .then()
+                .log()
+                .all()
+                .extract()
+                .response()
+                .as(PostMock.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String deSerializeStr = objectMapper.writeValueAsString(deSerializePojo);
+        String postMockStr = objectMapper.writeValueAsString(postMockPojo);
+
+        MatcherAssert.assertThat(objectMapper.readTree(deSerializeStr),
+                equalTo(objectMapper.readTree(postMockStr)));
+
+    }
 
 }

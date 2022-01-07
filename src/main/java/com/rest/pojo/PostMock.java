@@ -1,4 +1,4 @@
-package com.rest.endpoints;
+package com.rest.pojo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PostMock {
-    String id;
-    String type;
+
+
+    private String key1;
+    private String key2;
+
+
 }
