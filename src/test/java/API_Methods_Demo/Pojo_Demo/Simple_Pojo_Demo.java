@@ -2,7 +2,7 @@ package API_Methods_Demo.Pojo_Demo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rest.pojo.PostMock;
+import com.rest.pojo.simplePojo.PostMock;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
