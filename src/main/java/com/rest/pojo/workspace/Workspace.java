@@ -6,12 +6,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class Workspace {
     private String name;
     private String type;
     private String description;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int i;
 
     public Workspace(String name, String type, String description) {
         this.name = name;
