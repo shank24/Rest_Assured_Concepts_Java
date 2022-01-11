@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
+
 @Getter
 @Setter
 
@@ -14,8 +16,12 @@ public class Workspace {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id;
+
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private int i;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private HashMap<String, String> myHashMap;
 
     public Workspace(String name, String type, String description) {
         this.name = name;

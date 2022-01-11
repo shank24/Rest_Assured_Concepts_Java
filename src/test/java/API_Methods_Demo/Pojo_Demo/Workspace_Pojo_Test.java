@@ -13,6 +13,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -52,6 +54,9 @@ public class Workspace_Pojo_Test {
     public void validate_Workspace_Pojo(String name, String type, String description) {
 
         Workspace workspace = new Workspace(name, type, description);
+
+        HashMap<String, String> myHashMap = new HashMap<>();
+        workspace.setMyHashMap(myHashMap);
 
         WorkspaceRoot workspaceRoot = new WorkspaceRoot(workspace);
 
