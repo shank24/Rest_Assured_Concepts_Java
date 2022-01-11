@@ -10,6 +10,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -47,10 +48,10 @@ public class Workspace_Pojo_Test {
     }
 
 
-    @Test
-    public void validate_Workspace_Pojo() {
+    @Test(dataProvider = "workspace")
+    public void validate_Workspace_Pojo(String name, String type, String description) {
 
-        Workspace workspace = new Workspace("myWorkSpace5", "personal", "description");
+        Workspace workspace = new Workspace(name, type, description);
 
         WorkspaceRoot workspaceRoot = new WorkspaceRoot(workspace);
 
@@ -69,6 +70,16 @@ public class Workspace_Pojo_Test {
         assertThat(deSerializedPojo.getWorkspace().getId(),
                 matchesPattern("^[a-z0-9-]{36}$"));
 
+    }
+
+
+    @DataProvider(name = "workspace")
+    public Object[][] getWorkspace() {
+        return new Object[][]
+                {
+                        {"My_WorkSpace_6", "personal", "description"},
+                        {"My_WorkSpace_7", "team", "description"}
+                };
     }
 
 }
