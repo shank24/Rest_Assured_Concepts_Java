@@ -11,4 +11,12 @@ public class Collection {
     Info info;
     List<Object> item;
 
+    public Collection(Info info, List<Object> item) {
+        this.info = info;
+        this.item = item;
+    }
+
+    public Collection() {
+
+    }
 }
