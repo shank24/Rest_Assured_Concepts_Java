@@ -83,6 +83,54 @@ public class Complex_Pojo_Test {
 
     }
 
+    @Test
+    public void validate_Post_Verb_De_Serialize() {
+
+        Header header = new Header("Content-Type", "application/json");
+        List<Header> headerList = new ArrayList<>();
+        headerList.add(header);
+
+        Body body = new Body("raw", "{\"data\": \"123\"}");
+
+        Request request = new Request("https://postman-echo.com/post", "POST",
+                headerList, body, "This is a sample POST Request");
+
+        RequestRoot requestRoot = new RequestRoot("Sample POST Request", request);
+
+        List<RequestRoot> requestItemList = new ArrayList<>();
+        requestItemList.add(requestRoot);
+
+        Folder folder = new Folder("This is a folder", requestItemList);
+        List<Object> folderList = new ArrayList<>();
+        folderList.add(folder);
+
+        Info info = new Info("Collection - Stranger Things Season 4", "This is just a sample collection.",
+                "https://schema.getpostman.com/json/collection/v2.1.0/collection.json");
+
+        Collection collection = new Collection(info, folderList);
+
+        CollectionRoot collectionRoot = new CollectionRoot(collection);
+
+        String collection_Uid = given()
+                .body(collectionRoot)
+                .when()
+                .post(Endpoints_Web_Services.COLLECTION)
+                .then()
+                .extract()
+                .response()
+                .path("collection.uid");
+
+
+        CollectionRoot deSerialized_collection_uid = given()
+                .pathParam("collection_Uid", collection_Uid)
+                .when()
+                .get(Endpoints_Web_Services.COLLECTION + "/{collection_Uid}")
+                .then()
+                .extract()
+                .response()
+                .as(CollectionRoot.class);
+    }
+
 }
 
 
