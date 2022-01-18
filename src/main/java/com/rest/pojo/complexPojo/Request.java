@@ -8,13 +8,13 @@ import java.util.List;
 @Getter
 @Setter
 public class Request {
-    private String url;
+    private Object url;
     private String method;
     List<Header> header;
     Body body;
     private String description;
 
-    public Request(String url, String method, List<Header> header, Body body, String description) {
+    public Request(Object url, String method, List<Header> header, Body body, String description) {
         this.url = url;
         this.method = method;
         this.header = header;

@@ -1,5 +1,6 @@
 package API_Methods_Demo.Complex_Pojo_Collections;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.pojo.complexPojo.*;
 import com.rest.propertyReader.ObjectReader;
@@ -65,7 +66,7 @@ public class Complex_Pojo_Test {
         requestItemList.add(requestRoot);
 
         Folder folder = new Folder("This is a folder", requestItemList);
-        List<Object> folderList = new ArrayList<>();
+        List<Folder> folderList = new ArrayList<>();
         folderList.add(folder);
 
         Info info = new Info("Collection - Stranger Things Season 4", "This is just a sample collection.",
@@ -84,7 +85,7 @@ public class Complex_Pojo_Test {
     }
 
     @Test
-    public void validate_Post_Verb_De_Serialize() {
+    public void validate_Post_Verb_De_Serialize() throws JsonProcessingException {
 
         Header header = new Header("Content-Type", "application/json");
         List<Header> headerList = new ArrayList<>();
@@ -101,7 +102,7 @@ public class Complex_Pojo_Test {
         requestItemList.add(requestRoot);
 
         Folder folder = new Folder("This is a folder", requestItemList);
-        List<Object> folderList = new ArrayList<>();
+        List<Folder> folderList = new ArrayList<>();
         folderList.add(folder);
 
         Info info = new Info("Collection - Stranger Things Season 4", "This is just a sample collection.",
@@ -121,7 +122,7 @@ public class Complex_Pojo_Test {
                 .path("collection.uid");
 
 
-        CollectionRoot deSerialized_collection_uid = given()
+        CollectionRoot deSerialized_collectionRoot = given()
                 .pathParam("collection_Uid", collection_Uid)
                 .when()
                 .get(Endpoints_Web_Services.COLLECTION + "/{collection_Uid}")
@@ -129,6 +130,11 @@ public class Complex_Pojo_Test {
                 .extract()
                 .response()
                 .as(CollectionRoot.class);
+
+        /*ObjectMapper objectMapper = new ObjectMapper();
+        String collectionRootstr = objectMapper.writeValueAsString(collectionRoot);
+        String deSerializedCollectionRootstr = objectMapper.writeValueAsString(deSerialized_collectionRoot);*/
+
     }
 
 }

@@ -9,9 +9,9 @@ import java.util.List;
 @Setter
 public class Collection {
     Info info;
-    List<Object> item;
+    List<Folder> item;
 
-    public Collection(Info info, List<Object> item) {
+    public Collection(Info info, List<Folder> item) {
         this.info = info;
         this.item = item;
     }
