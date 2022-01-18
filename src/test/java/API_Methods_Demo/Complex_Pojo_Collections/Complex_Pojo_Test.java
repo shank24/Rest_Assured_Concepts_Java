@@ -1,6 +1,7 @@
 package API_Methods_Demo.Complex_Pojo_Collections;
 
 import com.rest.endpoints.Endpoints_Web_Services;
+import com.rest.pojo.complexPojo.*;
 import com.rest.propertyReader.ObjectReader;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -10,9 +11,10 @@ import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.matchesPattern;
 
 
 public class Complex_Pojo_Test {
@@ -47,25 +49,85 @@ public class Complex_Pojo_Test {
 
     @Test
     public void validate_Post_Verb() {
-        String payload = "{\n" +
-                "    \"workspace\": \n" +
-                "        {\n" +
-                "            \"id\": \"9815f1bd-38be-4bce-8003-e68bc0f4a2d8\",\n" +
-                "            \"name\": \"My Workspace3\",\n" +
-                "            \"type\": \"personal\",\n" +
-                "            \"description\" : \"This is dummy workspaces\"\n" +
-                "        }\n" +
-                "}";
+
+        Header header = new Header("Content-Type", "application/json");
+        List<Header> headerList = new ArrayList<>();
+        headerList.add(header);
+
+        Body body = new Body("raw", "{\"data\": \"123\"}");
+
+        Request request = new Request("https://postman-echo.com/post", "POST",
+                headerList, body, "This is a sample POST Request");
+
+        RequestRoot requestRoot = new RequestRoot("Sample POST Request", request);
+
+        List<RequestRoot> requestItemList = new ArrayList<>();
+        requestItemList.add(requestRoot);
+
+        Folder folder = new Folder("This is a folder", requestItemList);
+        List<Object> folderList = new ArrayList<>();
+        folderList.add(folder);
+
+        Info info = new Info("Collection - Stranger Things Season 4", "This is just a sample collection.",
+                "https://schema.getpostman.com/json/collection/v2.1.0/collection.json");
+
+        Collection collection = new Collection(info, folderList);
+
+        CollectionRoot collectionRoot = new CollectionRoot(collection);
 
         given()
-                .body(payload)
+                .body(collectionRoot)
                 .when()
-                .post(Endpoints_Web_Services.WORKSPACE)
-                .then()
-                .assertThat()
-                .body("workspace.name", equalTo("My Workspace3"),
-                        "workspace.id", matchesPattern("^[a-z0-9-]{36}$"));
+                .post(Endpoints_Web_Services.COLLECTION)
+                .then();
 
     }
 
 }
+
+
+/*
+*
+{
+  "collection": {
+    "info": {
+      "name": "Sample Collection - Stranger Things Episode 9",
+      "description": "This is just a sample collection.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "This is a folder",
+        "item": [
+          {
+            "name": "Sample POST Request",
+            "request": {
+              "url": "https://postman-echo.com/post",
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"data\": \"123\"}"
+              },
+              "description": "This is a sample POST Request"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Sample GET Request",
+        "request": {
+          "url": "https://postman-echo/get",
+          "method": "GET",
+          "description": "This is a sample GET Request"
+        }
+      }
+    ]
+  }
+}
+* */
