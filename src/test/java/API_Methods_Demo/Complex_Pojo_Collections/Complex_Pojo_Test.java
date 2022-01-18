@@ -1,6 +1,7 @@
 package API_Methods_Demo.Complex_Pojo_Collections;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rest.endpoints.Endpoints_Web_Services;
 import com.rest.pojo.complexPojo.*;
 import com.rest.propertyReader.ObjectReader;
@@ -9,6 +10,12 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
+import org.json.JSONException;
+import org.skyscreamer.jsonassert.Customization;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.ValueMatcher;
+import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -85,7 +92,7 @@ public class Complex_Pojo_Test {
     }
 
     @Test
-    public void validate_Post_Verb_De_Serialize() throws JsonProcessingException {
+    public void validate_Post_Verb_De_Serialize() throws JsonProcessingException, JSONException {
 
         Header header = new Header("Content-Type", "application/json");
         List<Header> headerList = new ArrayList<>();
@@ -131,9 +138,20 @@ public class Complex_Pojo_Test {
                 .response()
                 .as(CollectionRoot.class);
 
-        /*ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
         String collectionRootstr = objectMapper.writeValueAsString(collectionRoot);
-        String deSerializedCollectionRootstr = objectMapper.writeValueAsString(deSerialized_collectionRoot);*/
+        String deSerializedCollectionRootstr = objectMapper.writeValueAsString(deSerialized_collectionRoot);
+
+        JSONAssert.assertEquals(collectionRootstr, deSerializedCollectionRootstr,
+                new CustomComparator(JSONCompareMode.STRICT_ORDER,
+                        new Customization("collection.item[*].item[*].request.url",
+                                new ValueMatcher<Object>() {
+                                    @Override
+                                    public boolean equal(Object o1, Object o2) {
+                                        return true;
+                                    }
+                                })));
+
 
     }
 
