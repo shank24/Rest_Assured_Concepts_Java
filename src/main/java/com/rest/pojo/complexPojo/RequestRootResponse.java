@@ -7,15 +7,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RequestRoot {
-    private String name;
-    Request request;
+public class RequestRootResponse extends RequestRootBase {
+    RequestResponse request;
 
-    public RequestRoot(String name, Request request) {
-        this.name = name;
+    public RequestRootResponse(String name, RequestResponse request) {
+        super(name);
         this.request = request;
     }
 
-    public RequestRoot() {
+    public RequestRootResponse() {
     }
 }

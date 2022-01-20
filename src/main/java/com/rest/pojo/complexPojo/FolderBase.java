@@ -4,21 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Folder {
+public abstract class FolderBase {
     private String name;
-    List<RequestRoot> item;
 
-    public Folder(String name, List<RequestRoot> item) {
+    public FolderBase(String name) {
         this.name = name;
-        this.item = item;
     }
 
-    public Folder() {
+    public FolderBase() {
 
     }
 }

@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class Request_Specification_Demo {
+public class Request_Base_Specification_Demo {
 
     //RequestSpecification requestSpecification;
 

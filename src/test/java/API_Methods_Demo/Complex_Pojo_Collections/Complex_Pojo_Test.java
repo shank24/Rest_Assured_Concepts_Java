@@ -64,24 +64,24 @@ public class Complex_Pojo_Test {
 
         Body body = new Body("raw", "{\"data\": \"123\"}");
 
-        Request request = new Request("https://postman-echo.com/post", "POST",
-                headerList, body, "This is a sample POST Request");
+        RequestRequest request = new RequestRequest("https://postman-echo.com/post", "POST",
+                headerList, body, "This is a sample POST RequestBase");
 
-        RequestRoot requestRoot = new RequestRoot("Sample POST Request", request);
+        RequestRootRequest requestRoot = new RequestRootRequest("Sample POST RequestBase", request);
 
-        List<RequestRoot> requestItemList = new ArrayList<>();
+        List<RequestRootRequest> requestItemList = new ArrayList<>();
         requestItemList.add(requestRoot);
 
-        Folder folder = new Folder("This is a folder", requestItemList);
-        List<Folder> folderList = new ArrayList<>();
-        folderList.add(folder);
+        FolderRequest folderRequest = new FolderRequest("This is a folderBase", requestItemList);
+        List<FolderRequest> folderList = new ArrayList<>();
+        folderList.add(folderRequest);
 
-        Info info = new Info("Collection - Stranger Things Season 4", "This is just a sample collection.",
+        Info info = new Info("CollectionBase - Stranger Things Season 4", "This is just a sample collectionBase.",
                 "https://schema.getpostman.com/json/collection/v2.1.0/collection.json");
 
-        Collection collection = new Collection(info, folderList);
+        CollectionRequest collection = new CollectionRequest(info, folderList);
 
-        CollectionRoot collectionRoot = new CollectionRoot(collection);
+        CollectionRootRequest collectionRoot = new CollectionRootRequest(collection);
 
         given()
                 .body(collectionRoot)
@@ -100,24 +100,25 @@ public class Complex_Pojo_Test {
 
         Body body = new Body("raw", "{\"data\": \"123\"}");
 
-        Request request = new Request("https://postman-echo.com/post", "POST",
-                headerList, body, "This is a sample POST Request");
+        RequestRequest request = new RequestRequest("https://postman-echo.com/post", "POST",
+                headerList, body, "This is a sample POST RequestBase");
 
-        RequestRoot requestRoot = new RequestRoot("Sample POST Request", request);
+        RequestRootRequest requestRoot = new RequestRootRequest("Sample POST RequestBase", request);
 
-        List<RequestRoot> requestItemList = new ArrayList<>();
+        List<RequestRootRequest> requestItemList = new ArrayList<>();
         requestItemList.add(requestRoot);
 
-        Folder folder = new Folder("This is a folder", requestItemList);
-        List<Folder> folderList = new ArrayList<>();
-        folderList.add(folder);
+        FolderRequest folderRequest = new FolderRequest("This is a folderBase", requestItemList);
+        List<FolderRequest> folderList = new ArrayList<>();
+        folderList.add(folderRequest);
 
-        Info info = new Info("Collection - Stranger Things Season 4", "This is just a sample collection.",
+        Info info = new Info("CollectionBase - Stranger Things Season 4", "This is just a sample collection.",
                 "https://schema.getpostman.com/json/collection/v2.1.0/collection.json");
 
-        Collection collection = new Collection(info, folderList);
+        CollectionRequest collection = new CollectionRequest(info, folderList);
 
-        CollectionRoot collectionRoot = new CollectionRoot(collection);
+        CollectionRootRequest collectionRoot = new CollectionRootRequest(collection);
+
 
         String collection_Uid = given()
                 .body(collectionRoot)
@@ -129,18 +130,18 @@ public class Complex_Pojo_Test {
                 .path("collection.uid");
 
 
-        CollectionRoot deSerialized_collectionRoot = given()
+        CollectionRootResponse deSerialized_collectionRootBase = given()
                 .pathParam("collection_Uid", collection_Uid)
                 .when()
                 .get(Endpoints_Web_Services.COLLECTION + "/{collection_Uid}")
                 .then()
                 .extract()
                 .response()
-                .as(CollectionRoot.class);
+                .as(CollectionRootResponse.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String collectionRootstr = objectMapper.writeValueAsString(collectionRoot);
-        String deSerializedCollectionRootstr = objectMapper.writeValueAsString(deSerialized_collectionRoot);
+        String deSerializedCollectionRootstr = objectMapper.writeValueAsString(deSerialized_collectionRootBase);
 
         JSONAssert.assertEquals(collectionRootstr, deSerializedCollectionRootstr,
                 new CustomComparator(JSONCompareMode.STRICT_ORDER,
@@ -161,10 +162,10 @@ public class Complex_Pojo_Test {
 /*
 *
 {
-  "collection": {
+  "collectionBase": {
     "info": {
-      "name": "Sample Collection - Stranger Things Episode 9",
-      "description": "This is just a sample collection.",
+      "name": "Sample CollectionBase - Stranger Things Episode 9",
+      "description": "This is just a sample collectionBase.",
       "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
@@ -172,8 +173,8 @@ public class Complex_Pojo_Test {
         "name": "This is a folder",
         "item": [
           {
-            "name": "Sample POST Request",
-            "request": {
+            "name": "Sample POST RequestBase",
+            "requestBase": {
               "url": "https://postman-echo.com/post",
               "method": "POST",
               "header": [
@@ -186,17 +187,17 @@ public class Complex_Pojo_Test {
                 "mode": "raw",
                 "raw": "{\"data\": \"123\"}"
               },
-              "description": "This is a sample POST Request"
+              "description": "This is a sample POST RequestBase"
             }
           }
         ]
       },
       {
-        "name": "Sample GET Request",
-        "request": {
+        "name": "Sample GET RequestBase",
+        "requestBase": {
           "url": "https://postman-echo/get",
           "method": "GET",
-          "description": "This is a sample GET Request"
+          "description": "This is a sample GET RequestBase"
         }
       }
     ]

@@ -31,7 +31,7 @@ public class Payload_Array_File_Demo {
 
         requestSpecBuilder.setBaseUri("https://7fd638e3-e495-4a96-9c53-2cafad55c9d5.mock.pstmn.io/");
         requestSpecBuilder.setContentType(ContentType.JSON);
-        requestSpecBuilder.addHeader("x-mock-match-request-body", "true");
+        requestSpecBuilder.addHeader("x-mock-match-requestBase-body", "true");
         requestSpecBuilder.setConfig(config.encoderConfig(EncoderConfig.encoderConfig().
                 appendDefaultContentCharsetToContentTypeIfUndefined(false)));
         requestSpecBuilder.log(LogDetail.ALL);

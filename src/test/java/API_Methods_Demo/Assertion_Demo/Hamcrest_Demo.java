@@ -19,13 +19,13 @@ public class Hamcrest_Demo {
 
 
     /*
-    containsInAnyOrder() - Check all elements are in a collection and in any order.
-    contains() - Check all elements are in a collection and in a strict order.
-    hasItems() - Check  all elements are in a collection, but not strictly.
-    hasItem() - Check Single element in a collection.
-    empty() - Check if collection is empty.
-    hasSize() - Check size of a collection.
-    everyItem(startsWith()) - Check if every item in a collection,
+    containsInAnyOrder() - Check all elements are in a collectionBase and in any order.
+    contains() - Check all elements are in a collectionBase and in a strict order.
+    hasItems() - Check  all elements are in a collectionBase, but not strictly.
+    hasItem() - Check Single element in a collectionBase.
+    empty() - Check if collectionBase is empty.
+    hasSize() - Check size of a collectionBase.
+    everyItem(startsWith()) - Check if every item in a collectionBase,
     starts with specified string.
 
     hasKey() -> Map -> Check if map has the specified key [value is not checked].
