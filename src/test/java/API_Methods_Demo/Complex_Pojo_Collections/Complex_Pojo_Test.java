@@ -25,6 +25,7 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
 
 
 public class Complex_Pojo_Test {
@@ -177,7 +178,63 @@ public class Complex_Pojo_Test {
         assertThat(URLResponseList, containsInAnyOrder(URLRequestList.toArray()));
     }
 
+
+    @Test
+    public void simple_Post_Verb_De_Serialize() throws JsonProcessingException, JSONException {
+
+
+        List<FolderRequest> folderList = new ArrayList<>();
+
+        Info info = new Info("Sample Collection 2", "This is just a sample collection.",
+                "https://schema.getpostman.com/json/collection/v2.1.0/collection.json");
+
+        CollectionRequest collection = new CollectionRequest(info, folderList);
+
+        CollectionRootRequest collectionRoot = new CollectionRootRequest(collection);
+
+
+        String collection_Uid = given()
+                .body(collectionRoot)
+                .when()
+                .post(Endpoints_Web_Services.COLLECTION)
+                .then()
+                .extract()
+                .response()
+                .path("collection.uid");
+
+
+        CollectionRootResponse deSerialized_collectionRootBase = given()
+                .pathParam("collection_Uid", collection_Uid)
+                .when()
+                .get(Endpoints_Web_Services.COLLECTION + "/{collection_Uid}")
+                .then()
+                .extract()
+                .response()
+                .as(CollectionRootResponse.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String collectionRootstr = objectMapper.writeValueAsString(collectionRoot);
+        String deSerializedCollectionRootstr = objectMapper.writeValueAsString(deSerialized_collectionRootBase);
+
+        assertThat(objectMapper.readTree(collectionRootstr),
+                equalTo(objectMapper.readTree(deSerializedCollectionRootstr)));
+
+        /*JSONAssert.assertEquals(collectionRootstr, deSerializedCollectionRootstr,
+                new CustomComparator(JSONCompareMode.STRICT_ORDER,
+                        new Customization("collection.item[*].item[*].request.url",
+                                new ValueMatcher<Object>() {
+                                    @Override
+                                    public boolean equal(Object o1, Object o2) {
+                                        return true;
+                                    }
+                                })));*/
+    }
 }
+
+
+
+
+
 
 
 /*
