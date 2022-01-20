@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 
 public class Complex_Pojo_Test {
@@ -103,8 +105,8 @@ public class Complex_Pojo_Test {
         RequestRequest request = new RequestRequest("https://postman-echo.com/post", "POST",
                 headerList, body, "This is a sample POST RequestBase");
 
-        RequestRootRequest requestRoot = new RequestRootRequest("Sample POST RequestBase", request);
 
+        RequestRootRequest requestRoot = new RequestRootRequest("Sample POST RequestBase", request);
         List<RequestRootRequest> requestItemList = new ArrayList<>();
         requestItemList.add(requestRoot);
 
@@ -154,6 +156,25 @@ public class Complex_Pojo_Test {
                                 })));
 
 
+        List<String> URLRequestList = new ArrayList<>();
+        List<String> URLResponseList = new ArrayList<>();
+
+        for (RequestRootRequest requestRequest : requestItemList) {
+            System.out.println("Url from Request Payload " + requestRequest.getRequest().getUrl());
+            URLRequestList.add(requestRequest.getRequest().getUrl());
+        }
+
+        List<FolderResponse> folderResponseList = deSerialized_collectionRootBase.getCollection().getItem();
+        for (FolderResponse folderResponse : folderResponseList) {
+            List<RequestRootResponse> requestRootResponseList = folderResponse.getItem();
+            for (RequestRootResponse requestRootResponse : requestRootResponseList) {
+                URL url = requestRootResponse.getRequest().getUrl();
+                System.out.println("Url from Request Payload " + url.getRaw());
+                URLResponseList.add(url.getRaw());
+            }
+        }
+
+        assertThat(URLResponseList, containsInAnyOrder(URLRequestList.toArray()));
     }
 
 }
