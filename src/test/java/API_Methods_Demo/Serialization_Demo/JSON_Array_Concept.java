@@ -29,7 +29,7 @@ public class JSON_Array_Concept {
     public void beforeClass() {
 
         /**
-         * RequestSpec Builder
+         * RequestSpec Builder Impl
          */
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
 
